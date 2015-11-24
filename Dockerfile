@@ -10,9 +10,9 @@ RUN mkdir /caddysrc \
 && chmod 755 /usr/bin/caddy \
 && rm -rf /caddysrc
 RUN mkdir /wtsrc \
-&& curl -sL -o /wtsrc/ wt__linux_amd64.tar.gz "https://github.com/wellington/wellington/releases/download/v1.0.1/wt_v1.0.1_linux_amd64.tar.gz" \
+&& curl -sL -o /wtsrc/wt__linux_amd64.tar.gz "https://github.com/wellington/wellington/releases/download/v1.0.1/wt_v1.0.1_linux_amd64.tar.gz" \
 && tar -xf /wtsrc/wt__linux_amd64.tar.gz -C /wtsrc \
-&& mv /wtsrc/wt /usr/bin/wt \
+&& mv /wtsrc/*/wt /usr/bin/wt \
 && chmod 755 /usr/bin/wt \
 && rm -rf /wtsrc
 
