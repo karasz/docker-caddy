@@ -9,6 +9,13 @@ RUN mkdir /caddysrc \
 && mv /caddysrc/caddy /usr/bin/caddy \
 && chmod 755 /usr/bin/caddy \
 && rm -rf /caddysrc
+RUN mkdir /wtsrc \
+&& curl -sL -o /wtsrc/ wt__linux_amd64.tar.gz "https://github.com/wellington/wellington/releases/download/v1.0.1/wt_v1.0.1_linux_amd64.tar.gz" \
+&& tar -xf /wtsrc/wt__linux_amd64.tar.gz -C /wtsrc \
+&& mv /wtsrc/wt /usr/bin/wt \
+&& chmod 755 /usr/bin/wt \
+&& rm -rf /wtsrc
+
 ADD docker/Caddyfile /etc/Caddyfile
 ADD docker/id_rsa /etc/id_rsa
 RUN mkdir -p /srv/git
