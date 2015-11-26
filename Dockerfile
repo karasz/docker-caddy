@@ -21,6 +21,12 @@ RUN mkdir /wtsrc \
 && chmod 755 /usr/bin/wt \
 && rm -rf /wtsrc
 
+## Install nodejs and then jade
+#
+RUN apk add --update nodejs
+RUN npm install jade -g
+RUN rm -rf /var/cache/apk/*
+
 ## Add files
 #
 ADD docker/Caddyfile /etc/Caddyfile
