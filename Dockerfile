@@ -6,7 +6,7 @@ RUN apk add --update openssh-client git tar asciidoc
 ## Install Caddy Server
 #
 RUN mkdir /caddysrc \
-&& curl -sL -o /caddysrc/caddy_linux_amd64.tar.gz "https://caddyserver.com/download/build?os=linux&arch=amd64&features=git,hugo,ipfilter,search" \
+&& curl -sL -o /caddysrc/caddy_linux_amd64.tar.gz "https://caddyserver.com/download/build?os=linux&arch=amd64&features=git" \
 && tar -xf /caddysrc/caddy_linux_amd64.tar.gz -C /caddysrc \
 && mv /caddysrc/caddy /usr/bin/caddy \
 && chmod 755 /usr/bin/caddy \
