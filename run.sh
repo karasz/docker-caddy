@@ -1,9 +1,13 @@
- #!/bin/sh
+#!/bin/sh
 
-set -eu
+set -eux
 
 cd "$(dirname "$0")"
 TAG="$USER/${PWD##*/}"
 
-exec docker run -it -e TERM "$@" "$TAG"
+set -- "$@" --cap-add NET_BIND_SERVICE \
+	-v $(pwd)/etc:/etc/caddy \
+	-v ~/.caddy:/root/.caddy
+
+exec docker run "$@" "$TAG"
 

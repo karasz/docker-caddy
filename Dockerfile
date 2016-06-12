@@ -1,7 +1,7 @@
-FROM alpine:3.2
+FROM alpine:3.3
 MAINTAINER Nagy Károly Gábriel <karasz@jpi.io>
 
-RUN apk add --update openssh-client git tar asciidoc
+RUN apk add --update openssh-client git tar asciidoc findutils
 
 ## Install Caddy Server
 #
@@ -15,31 +15,24 @@ RUN mkdir /caddysrc \
 ## Install Wellington
 #
 RUN mkdir /wtsrc \
-&& curl -sL -o /wtsrc/wt__linux_amd64.tar.gz "https://github.com/wellington/wellington/releases/download/v1.0.1/wt_v1.0.1_linux_amd64.tar.gz" \
+&& curl -sL -o /wtsrc/wt__linux_amd64.tar.gz "https://github.com/wellington/wellington/releases/download/v1.0.2/wt_v1.0.2_linux_amd64.tar.gz" \
 && tar -xf /wtsrc/wt__linux_amd64.tar.gz -C /wtsrc \
-&& mv /wtsrc/*/wt /usr/bin/wt \
+&& mv /wtsrc/wt /usr/bin/wt \
 && chmod 755 /usr/bin/wt \
 && rm -rf /wtsrc
 
-## Install nodejs and then jade
-#
-RUN apk add --update nodejs
-RUN npm install jade -g
-RUN rm -rf /var/cache/apk/*
-
 ## Add files
 #
-ADD docker/Caddyfile /etc/Caddyfile
-ADD docker/id_rsa /etc/id_rsa
 ADD docker/builder.sh /usr/bin/builder
 RUN chmod +x /usr/bin/builder
 
 RUN mkdir -p /srv/git
 RUN mkdir -p /srv/html
 
-EXPOSE 2015
+EXPOSE 80 443 2015
+
 
 WORKDIR /srv
-CMD ["/bin/sh"]
-#ENTRYPOINT ["/usr/bin/caddy"]
-#CMD ["--conf", "/etc/Caddyfile"]
+
+ENTRYPOINT ["/usr/bin/caddy"]
+CMD ["--conf", "/etc/caddy/Caddyfile"]
